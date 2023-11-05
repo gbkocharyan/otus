@@ -33,8 +33,8 @@ class RecordedSimulation extends Simulation {
 
 
   private val scn = scenario("RecordedSimulation")
-    .// Main page
-    exec(
+    // Main page
+    .exec(
       http("request_0")
         .get("/webtours/")
         .headers(headers_0)
@@ -47,7 +47,6 @@ class RecordedSimulation extends Simulation {
             .headers(headers_1)
         )
     )
-    .pause(19)
     // Login
     .exec(
       http("request_3")
