@@ -5,37 +5,20 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 
 object Actions {
+
   val open1: HttpRequestBuilder = http("open1")
     .get("/webtours/")
-    .header("Cache-Control", "max-age=0")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("If-Modified-Since", "Mon, 27 May 2013 12:20:22 GMT")
-    .header("If-None-Match", "\"900000001a214-16e-4ddb22c2e6d80\"")
-    .header("Upgrade-Insecure-Requests", "1")
 
   val open2: HttpRequestBuilder = http("open2")
     .get("/cgi-bin/welcome.pl?signOff=true")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/webtours/")
-    .header("Upgrade-Insecure-Requests", "1")
 
   val open3: HttpRequestBuilder = http("open3")
     .get("/cgi-bin/nav.pl?in=home")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/cgi-bin/welcome.pl?signOff=true")
-    .header("Upgrade-Insecure-Requests", "1")
     .check(regex("""name="userSession" value="(.+)"/>""").saveAs("userSession"))
 
 
   val login1: HttpRequestBuilder = http("login1")
     .post("/cgi-bin/login.pl")
-    .header("Cache-Control", "max-age=0")
-    .header("Content-Length", "124")
-    .header("Content-Type", "application/x-www-form-urlencoded")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Origin", "http://webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/cgi-bin/nav.pl?in=home")
-    .header("Upgrade-Insecure-Requests", "1")
     .formParam("userSession", "#{userSession}")
     .formParam("username", "gevor")
     .formParam("password", "acba")
@@ -45,46 +28,34 @@ object Actions {
 
   val login2: HttpRequestBuilder = http("login2")
     .get("/cgi-bin/nav.pl")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/cgi-bin/login.pl")
-    .header("Upgrade-Insecure-Requests", "1")
     .queryParam("page", "menu")
     .queryParam("in", "home")
 
   val login3: HttpRequestBuilder = http("login3")
     .get("/cgi-bin/login.pl")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/cgi-bin/login.pl")
-    .header("Upgrade-Insecure-Requests", "1")
     .queryParam("intro", "true")
 
 
   val flights1: HttpRequestBuilder = http("flights1")
     .get("/cgi-bin/welcome.pl")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/cgi-bin/nav.pl?page=menu&in=home")
-    .header("Upgrade-Insecure-Requests", "1")
     .queryParam("page", "search")
 
 
   val flights2: HttpRequestBuilder = http("flights2")
     .get("/cgi-bin/nav.pl")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/cgi-bin/welcome.pl?page=search")
-    .header("Upgrade-Insecure-Requests", "1")
     .queryParam("page", "menu")
     .queryParam("in", "flights")
 
   val flights3: HttpRequestBuilder = http("flights3")
     .get("/cgi-bin/reservations.pl")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/cgi-bin/welcome.pl?page=search")
-    .header("Upgrade-Insecure-Requests", "1")
     .queryParam("page", "welcome")
+    .check(
+      regex("""<option value="([^"]+)""").findAll.saveAs("cities")
+    )
+
 
   val findFlights: HttpRequestBuilder = http("Find flights")
     .post("/cgi-bin/reservations.pl")
-//    .headers(headers_3)
     .formParam("advanceDiscount", "0")
     .formParam("depart", "London")
     .formParam("departDate", "11/01/2023")
@@ -103,7 +74,6 @@ object Actions {
 
   val selectFlight: HttpRequestBuilder = http("Select flight")
     .post("/cgi-bin/reservations.pl")
-//    .headers(headers_3)
     .formParam("outboundFlight", "240;108;11/01/2023")
     .formParam("returnFlight", "420;108;11/02/2023")
     .formParam("numPassengers", "1")
@@ -115,7 +85,6 @@ object Actions {
 
   val payment: HttpRequestBuilder = http("Payment")
     .post("/cgi-bin/reservations.pl")
-//    .headers(headers_3)
     .formParam("firstName", "Gevorg")
     .formParam("lastName", "Kocharyan")
     .formParam("address1", "")
@@ -138,25 +107,16 @@ object Actions {
 
   val home1: HttpRequestBuilder = http("home1")
     .get("/cgi-bin/welcome.pl")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/cgi-bin/nav.pl?page=menu&in=flights")
-    .header("Upgrade-Insecure-Requests", "1")
     .queryParam("page", "menus")
 
 
   val home2: HttpRequestBuilder = http("home2")
     .get("/cgi-bin/nav.pl")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/cgi-bin/welcome.pl?page=menus")
-    .header("Upgrade-Insecure-Requests", "1")
     .queryParam("page", "menu")
     .queryParam("in", "home")
 
   val home3: HttpRequestBuilder = http("home3")
     .get("/cgi-bin/login.pl")
-    .header("Host", "webtours.load-test.ru:1080")
-    .header("Referer", "http://webtours.load-test.ru:1080/cgi-bin/welcome.pl?page=menus")
-    .header("Upgrade-Insecure-Requests", "1")
     .queryParam("intro", "true")
 
 }

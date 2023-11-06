@@ -36,10 +36,10 @@ class Scenario {
   val scn: ScenarioBuilder = scenario("webTours")
     .exec(openGroup)
     .exec(loginGroup)
-//    .exec(flightsGroup)
-//    .exec(Actions.findFlights)
-//    .exec(Actions.selectFlight)
-//    .exec(Actions.payment)
-//    .exec(homeGroup)
+    .exec(flightsGroup)
+    .exec(Actions.findFlights)
+    .exec(Actions.selectFlight)
+    .exec(Actions.payment)
+    .exec(homeGroup)
 
 }
