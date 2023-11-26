@@ -3,7 +3,7 @@ import { check, group } from 'k6';
 //import { InfluxDB } from 'k6/influxdb';
 
 //const influxClient = new InfluxDB({
-//  url: 'http://localhost:8086/write?db=myk6db',
+//  url: 'http://localhost:8086/write?db=k6db',
 //  tags: {
 //    script_name: 'my_test_script',
 //    k6_env: 'test',
@@ -45,14 +45,14 @@ export const options = {
 };
 
 export function ya() {
-    const res = http.get('https://ya.ru/', { tags: { my_tag: 'ya' } });
+    const res = http.get('https://ya.ru/');
     check(res, {
       'status code is 200': (res) => res.status === 200,
     });
 };
 
 export function www() {
-    const res = http.get('http://www.ru/', { tags: { my_tag: 'www' } });
+    const res = http.get('http://www.ru/');
     check(res, {
       'status code is 200': (res) => res.status === 200,
     });
