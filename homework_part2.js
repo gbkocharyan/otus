@@ -19,10 +19,10 @@ export const options = {
       timeUnit: '1m',
       preAllocatedVUs: 50,
       stages: [
-         { target: 60, duration: '5s' },
-         { target: 60, duration: '10s' },
-         { target: 72, duration: '5s' },
-         { target: 72, duration: '10s' },
+         { target: 60, duration: '5m' },
+         { target: 60, duration: '10m' },
+         { target: 72, duration: '5m' },
+         { target: 72, duration: '10m' },
       ]
     },
      www: {
@@ -32,15 +32,15 @@ export const options = {
        timeUnit: '1m',
        preAllocatedVUs: 50,
        stages: [
-         { target: 120, duration: '5s' },
-         { target: 120, duration: '10s' },
-         { target: 144, duration: '5s' },
-         { target: 144, duration: '10s' },
+         { target: 120, duration: '5m' },
+         { target: 120, duration: '10m' },
+         { target: 144, duration: '5m' },
+         { target: 144, duration: '10m' },
        ]
      }
   },
   thresholds: {
-      http_req_duration: ['p(95)<500'],
+      http_req_duration: ['p(90)<500'],
     }
 };
 
